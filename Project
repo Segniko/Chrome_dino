@@ -1,0 +1,213 @@
+//This is a console based game that is a blue print of the game chrome Dino
+
+#include <conio.h> //Console input-output library
+#include <iostream> //Basic input-output library
+#include <windows.h> //Provides function for interacting with windows operating system.
+
+using namespace std;
+
+void gotoxy(int x, int y) //Function for assigning the coordinates x and y
+{
+    COORD coord; //built-in structure in windows.h
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); //To set the cursor position on specified coordinates
+}
+void delay(unsigned int mseconds) //used to hold the program's execution for a given number of milliseconds
+{
+   Sleep(mseconds);
+}
+void setup() //Initializes the overall game setup
+{
+    system("COLOR 2"); //Green color will be displayed
+    gotoxy(5,2);
+    string name;
+    cout << "Enter user name: ";
+    getline(cin, name);
+    system("cls");
+    gotoxy(1,1);
+    cout << "User name: " << name;
+    gotoxy(62,2);
+    cout << "SCORE : ";
+    gotoxy(62,3);
+    cout << "LEVEL : ";
+    gotoxy(1,25);
+    for(int x = 0; x < 150; x++){
+    cout << "_";
+    }
+}
+
+int t,speed = 50;
+void jc(int jump = 0) //Horizontal and vertical movement of the character
+{
+  static int a = 1;
+
+  if(jump == 0)
+    t = 0;
+  else if(jump == 2)
+    t--;
+  else t++;
+  gotoxy(2,15-t);
+  cout << "                 ";
+  gotoxy(2,16-t);
+  cout << "         ��������";
+  gotoxy(2,17-t);
+  cout << "         ��������";
+  gotoxy(2,18-t);
+  cout << "         ��������";
+  gotoxy(2,19-t);
+  cout << " �      �������� ";
+  gotoxy(2,20-t);
+  cout <<" ���  ���������� ";
+  gotoxy(2,21-t);
+  cout << " ������������  � ";
+  gotoxy(2,22-t);
+  cout << "   ���������     ";
+  gotoxy(2,23-t);
+  if(jump == 1 || jump == 2){
+  cout << "    ��� ��       ";
+  gotoxy(2,24-t);
+    cout << "    ��   ��      ";
+  }else if(a == 1)
+  {
+  cout << "    ����  ���    ";
+  gotoxy(2,24-t);
+  cout << "      ��         ";
+  a = 2;
+  }
+  else if(a == 2)
+  {
+  cout << "     ��� ��      ";
+  gotoxy(2,24-t);
+  cout << "          ��     ";
+  a = 1;
+  }
+  gotoxy(2,25-t);
+  if(jump!= 0){
+    cout << "                ";
+  }
+  else
+  {
+
+    cout << "________________";
+  }
+  delay(speed);
+}
+
+int highScore = 0;
+
+void obj() //Used to draw the obstacle by using Unicode animation.
+{
+  static int x = 0, scr = 0;
+  if(x == 56 && t < 4) //Detects the collision
+  {
+  scr = 0;
+  speed = 50;
+  gotoxy(36,8);
+  cout << "Game Over";
+  getch();
+  gotoxy(36,8);
+  cout << "         ";
+  }
+  gotoxy(74-x,20);
+  cout << "�    � ";
+  gotoxy(74-x,21);
+  cout << "�    � ";
+  gotoxy(74-x,22);
+  cout << "������ ";
+  gotoxy(74-x,23);
+  cout << "  �    ";
+  gotoxy(74-x,24);
+  cout << "  �  ";
+  x++;
+  if(x == 73)
+  {
+  x = 0;
+  scr++;
+  gotoxy(70,2);
+  cout << "        ";
+  gotoxy(70,2);
+  cout << scr;
+    if(speed > 0){
+    speed = 50 - scr;
+    if(scr <= 5){
+            gotoxy(70,3);
+            cout <<  "1";
+    }
+    if(scr > 5){
+            gotoxy(70,3);
+            cout << "2";
+    }
+    if(scr > 10){
+            gotoxy(70,3);
+            cout << "3";
+    }
+    if(scr > 20){
+            gotoxy(70,3);
+            cout << "4";
+    }
+    if(scr > 30){
+            gotoxy(70,3);
+            cout << "5";
+    }
+    if(scr > 40){
+            gotoxy(70,3);
+            cout << "6";
+    }
+  }
+    if(scr > highScore){
+    highScore = scr; //If the score is greater than high score then score will be assigned to high score
+    gotoxy(62,4);
+    cout << "High score: " << highScore;
+    }
+  }
+}
+int main() //The main function
+{
+    system("COLOR 6"); //Yellow color will be displayed
+
+    char y1 = 219;
+    cout << "\n\n\n\t\t\tLoading...";
+    cout << "\n\n\n\t\t\t\t";
+
+    for(int i = 0; i < 25; i++)
+    {
+    cout << y1;
+    Sleep(120);
+    }
+
+    system("cls");
+    gotoxy(1,5);
+    cout << "Press X to Exit, Press Space to Jump" << endl;
+    cout << "\n";
+    system("pause");
+
+  system("mode con: lines=29 cols=82");
+  char ch;
+  int i;
+  setup();
+  while(true)
+  {
+    while(!kbhit())
+    {
+      jc();
+      obj();
+    }
+    ch = getch();
+    if(ch == ' ')
+    {
+      for(i = 0; i < 12; i++)
+      {
+      jc(1);
+      obj();
+      }
+      for(i = 0; i < 12; i++)
+      {
+      jc(2);
+      obj();
+      }
+    }
+    else if(ch == 'x')
+      return 0;
+  }
+}
