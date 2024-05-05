@@ -32,7 +32,8 @@ void setup() //Initializes the overall game setup
     gotoxy(62,3);
     cout << "LEVEL : ";
     gotoxy(1,25);
-    for(int x = 0; x < 150; x++){
+    for(int x = 0; x < 150; x++)
+    {
     cout << "_";
     }
 }
@@ -64,7 +65,8 @@ void jc(int jump = 0) //Horizontal and vertical movement of the character
   gotoxy(2,22-t);
   cout << "   ���������     ";
   gotoxy(2,23-t);
-  if(jump == 1 || jump == 2){
+  if(jump == 1 || jump == 2)
+  {
   cout << "    ��� ��       ";
   gotoxy(2,24-t);
     cout << "    ��   ��      ";
@@ -83,7 +85,8 @@ void jc(int jump = 0) //Horizontal and vertical movement of the character
   a = 1;
   }
   gotoxy(2,25-t);
-  if(jump!= 0){
+  if(jump!= 0)
+  {
     cout << "                ";
   }
   else
@@ -128,34 +131,41 @@ void obj() //Used to draw the obstacle by using Unicode animation.
   cout << "        ";
   gotoxy(70,2);
   cout << scr;
-    if(speed > 0){
+    if(speed > 0)
+    {
     speed = 50 - scr;
     if(scr <= 5){
             gotoxy(70,3);
             cout <<  "1";
     }
-    if(scr > 5){
+    if(scr > 5)
+    {
             gotoxy(70,3);
             cout << "2";
     }
-    if(scr > 10){
+    if(scr > 10)
+    {
             gotoxy(70,3);
             cout << "3";
     }
-    if(scr > 20){
+    if(scr > 20)
+    {
             gotoxy(70,3);
             cout << "4";
     }
-    if(scr > 30){
+    if(scr > 30)
+    {
             gotoxy(70,3);
             cout << "5";
     }
-    if(scr > 40){
+    if(scr > 40)
+    {
             gotoxy(70,3);
             cout << "6";
     }
   }
-    if(scr > highScore){
+    if(scr > highScore)
+    {
     highScore = scr; //If the score is greater than high score then score will be assigned to high score
     gotoxy(62,4);
     cout << "High score: " << highScore;
